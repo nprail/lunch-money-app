@@ -1,19 +1,94 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Home
+      Lunch Money
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="getData($event)">
+    <ion-refresher-content> </ion-refresher-content>
+  </ion-refresher>
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
+      <ion-title size="large">Lunch Money</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div class="ion-padding">
-    <p>Home</p>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Acounts Overview</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-spinner *ngIf="!accountOverview"></ion-spinner>
+
+      <ion-list *ngIf="accountOverview">
+        <ion-item lines="none" *ngFor="let account of accountOverview.accounts">
+          <ion-label>
+            {{ account.type.label }} ({{ account.accounts.length }})
+          </ion-label>
+          <ion-note
+            slot="end"
+            [color]="account.type.negative ? 'danger' : null"
+          >
+            {{ account.total | currency }}
+          </ion-note>
+        </ion-item>
+
+        <br />
+
+        <ion-list-header>
+          <ion-label>
+            Estd. Net Worth
+          </ion-label>
+          <ion-note>
+            {{ accountOverview.net | currency }}
+          </ion-note>
+        </ion-list-header>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>This Month's Summary</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-spinner *ngIf="!monthlySummary"></ion-spinner>
+
+      <ion-list *ngIf="monthlySummary">
+        <ion-item lines="none">
+          <ion-label>
+            Income
+          </ion-label>
+          <ion-note slot="end" color="success">
+            {{ monthlySummary.income | currency }}
+          </ion-note>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label>
+            Expenses
+          </ion-label>
+          <ion-note slot="end">
+            {{ monthlySummary.expenses | currency }}
+          </ion-note>
+        </ion-item>
+
+        <br />
+
+        <ion-list-header>
+          <ion-label>
+            Net Income
+          </ion-label>
+          <ion-note>
+            {{ monthlySummary.net | currency }}
+          </ion-note>
+        </ion-list-header>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
