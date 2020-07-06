@@ -1,6 +1,7 @@
-import { ApiService } from './../services/api.service'
+import { ApiService, TransactionUpdate } from './../services/api.service'
 import { Component, OnInit } from '@angular/core'
 import { Transaction } from 'lunch-money'
+import { ToastController } from '@ionic/angular'
 
 @Component({
   selector: 'app-transactions',
@@ -11,7 +12,10 @@ export class TransactionsPage implements OnInit {
   transactions: Transaction[]
   categories: any[]
 
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    private toastController: ToastController
+  ) {}
 
   ngOnInit() {
     this.getData()
@@ -40,5 +44,40 @@ export class TransactionsPage implements OnInit {
     )
 
     event?.target?.complete()
+  }
+
+  public async toggleCleared(ev, transaction: Transaction) {
+    ev.stopPropagation()
+    ev.preventDefault()
+
+    try {
+      transaction.status =
+        transaction.status === 'uncleared' ? 'cleared' : 'uncleared'
+
+      const transactionUpdate: TransactionUpdate = {
+        transaction: {
+          status: transaction.status,
+        },
+      }
+
+      const update = await this.api.updateTransaction(
+        transaction.id,
+        transactionUpdate
+      )
+
+      this.toast('Transaction updated')
+    } catch (err) {
+      console.error(err)
+      this.toast(err?.error?.message || err?.message || err)
+    }
+  }
+
+  private async toast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 500,
+    })
+
+    await toast.present()
   }
 }

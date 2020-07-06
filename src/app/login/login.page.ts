@@ -35,7 +35,6 @@ export class LoginPage implements OnInit {
 
     if (token) {
       try {
-        console.log(token)
         this.api.tempToken = token
 
         await this.api.getAccounts()
@@ -43,7 +42,7 @@ export class LoginPage implements OnInit {
         this.auth.setToken(token)
         this.router.navigate(['/'])
       } catch (err) {
-        console.log(err?.error?.message)
+        console.error(err)
         if (err?.error?.message) {
           this.toast(err?.error?.message)
         }
