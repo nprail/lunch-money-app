@@ -1,0 +1,52 @@
+<ion-header></ion-header>
+
+<ion-content class="ion-padding">
+  <form #form="ngForm" (ngSubmit)="login(form)">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col
+          class="ion-align-self-center"
+          size-md="6"
+          size-lg="5"
+          size-xs="12"
+        >
+          <div class="ion-text-center">
+            <h3>Login</h3>
+          </div>
+          <div class="ion-padding">
+            <ion-item>
+              <ion-label position="stacked">Access Token</ion-label>
+              <ion-input
+                name="token"
+                type="password"
+                ngModel
+                required
+                [clearOnEdit]="false"
+              ></ion-input>
+            </ion-item>
+          </div>
+          <div class="ion-padding">
+            <ion-button
+              size="large"
+              type="submit"
+              [disabled]="form.invalid"
+              expand="block"
+            >
+              Login
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-end">
+        <ion-col class="ion-text-center">
+          <p>Need an access token?</p>
+
+          <ion-button size="small" (click)="openTokenPage()">
+            Get Access Token
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

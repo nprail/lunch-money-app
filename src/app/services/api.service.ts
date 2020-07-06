@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service'
 import { Injectable } from '@angular/core'
 import { Transaction, Asset } from 'lunch-money'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
@@ -40,16 +41,16 @@ interface EndpointOptions {
 })
 export class ApiService {
   private base = 'https://dev.lunchmoney.app'
-  private token = 'YOUR_TOKEN_HERE'
+  public tempToken = null
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   private getParams(
     endpoint: string,
     opts: EndpointOptions = {}
   ): { url: string; headers: HttpHeaders } {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${this.tempToken || this.auth.accessToken}`,
     })
 
     const url = new URL(endpoint, this.base)

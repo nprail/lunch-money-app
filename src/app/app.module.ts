@@ -1,8 +1,10 @@
+import { AuthService } from './services/auth.service'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouteReuseStrategy } from '@angular/router'
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular'
+import { IonicStorageModule } from '@ionic/storage'
 import { SplashScreen } from '@ionic-native/splash-screen/ngx'
 import { StatusBar } from '@ionic-native/status-bar/ngx'
 
@@ -16,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http'
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
   ],
@@ -23,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http'
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })
