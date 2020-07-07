@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module'
 import { IonicModule } from '@ionic/angular'
 import { RouterModule } from '@angular/router'
 import { NgModule } from '@angular/core'
@@ -13,6 +14,7 @@ import { TransactionsPageRoutingModule } from './transactions-routing.module'
     CommonModule,
     FormsModule,
     TransactionsPageRoutingModule,
+    SharedModule,
   ],
   declarations: [TransactionsPage],
 })

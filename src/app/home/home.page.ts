@@ -35,6 +35,8 @@ const accountTypes = {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  public transactions: Transaction[]
+  public categories: any[]
   public monthlySummary: { income: number; expenses: number; net: number }
   public accountOverview: any
 
@@ -108,6 +110,11 @@ export class HomePage implements OnInit {
   async getMonthSummary() {
     const categories = await this.api.getCategories()
     const transactions = await this.api.getTransactions()
+
+    this.categories = categories
+    this.transactions = transactions
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 3)
 
     let totalIncome = 0
     let totalExpenses = 0

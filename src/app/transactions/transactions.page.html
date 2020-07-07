@@ -20,35 +20,11 @@
     <ion-spinner></ion-spinner>
   </div>
   <ion-list>
-    <ion-item
+    <app-transaction-item
       *ngFor="let transaction of transactions"
-      [routerLink]="[transaction.id]"
-      button
+      [transaction]="transaction"
+      [categories]="categories"
     >
-      <ion-note slot="start">{{ transaction.date | date: 'MMM d' }}</ion-note>
-      <ion-label>
-        <p>
-          {{ transaction.payee }}
-        </p>
-        <ion-text color="secondary">
-          <p>{{ getCategory(transaction.category_id)?.name }}</p>
-        </ion-text>
-      </ion-label>
-      <ion-label class="ion-text-right" [color]="amountColor(transaction)">
-        {{ transaction.amount | currency }}
-      </ion-label>
-
-      <ion-button
-        slot="end"
-        (click)="toggleCleared($event, transaction)"
-        [disabled]="transaction.status === 'recurring'"
-        fill="clear"
-      >
-        <ion-icon
-          [color]="transaction.status === 'cleared' || transaction.status === 'recurring'  ? 'success': null"
-          name="checkmark"
-        ></ion-icon>
-      </ion-button>
-    </ion-item>
+    </app-transaction-item>
   </ion-list>
 </ion-content>

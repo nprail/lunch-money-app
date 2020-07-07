@@ -91,4 +91,24 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Recent Transactions</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-spinner *ngIf="!transactions"></ion-spinner>
+
+      <ion-list *ngIf="transactions">
+        <app-transaction-item
+          *ngFor="let transaction of transactions"
+          [transaction]="transaction"
+          [categories]="categories"
+          [hideClearButton]="true"
+        >
+        </app-transaction-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
